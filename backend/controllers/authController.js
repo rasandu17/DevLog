@@ -4,7 +4,7 @@ const { request } = require("express");
 const jwt = require("jsonwebtoken");
 
 exports.register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { username, email, password } = req.body;
 
   try {
     const existingUser = await User.findOne({ email });
@@ -14,7 +14,7 @@ exports.register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
-      name,
+      username,
       email,
       password: hashedPassword,
     });
@@ -23,9 +23,11 @@ exports.register = async (req, res) => {
     });
 
     res.status(201).json({ user, token });
-  } catch (err) {
-    res.status(500).json({ message: "Server error" });
-  }
+  } catch (error) {
+  console.error(error.message); // Add this line
+  res.status(500).json({ message: "Server error" });
+}
+
 };
 
 exports.login = async (req, res) => {
@@ -45,8 +47,10 @@ exports.login = async (req, res) => {
       });
   
       res.status(200).json({ user, token });
-    } catch (err) {
-      res.status(500).json({ message: 'Server error' });
-    }
+    } catch (error) {
+  console.error(error.message); // Add this line
+  res.status(500).json({ message: "Server error" });
+}
+
   };
   
