@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import CreatePost from "./pages/CreatePost";
+import CreatePost from "./pages/CreateBlog";
 import PrivateRoute from "./components/PrivateRoute";
 
 function App() {

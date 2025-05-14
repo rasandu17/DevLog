@@ -1,48 +1,38 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-function Navbar() {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
+const Navbar = () => {
+  const { user, logout } = useAuth(); 
+  console.log("USER IN NAVBAR:", user); 
 
   return (
-    <nav className="bg-blue-600 text-white px-6 py-4 shadow-md">
-      <div className="flex justify-between items-center">
-        <Link to="/" className="text-xl font-bold">
-          📝 BlogPlatform
+    <nav className="flex justify-between p-4 bg-gray-800 text-white">
+      <div>
+        <Link to="/" className="mr-4">
+          Home
         </Link>
-        <div className="space-x-4">
-          <Link to="/" className="hover:underline">
-            Home
-          </Link>
-          {user ? (
-            <>
-              <Link to="/create" className="hover:underline">
-                Create Post
-              </Link>
-              <button onClick={handleLogout} className="hover:underline">
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className="hover:underline">
-                Login
-              </Link>
-              <Link to="/register" className="hover:underline">
-                Register
-              </Link>
-            </>
-          )}
-        </div>
+        {user ? (
+          <>
+            <Link to="/profile" className="mr-4">
+              Profile
+            </Link>
+            <button onClick={logout} className="mr-4">
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/login" className="mr-4">
+              Login
+            </Link>
+            <Link to="/register" className="mr-4">
+              Register
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;

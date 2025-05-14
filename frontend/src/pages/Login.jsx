@@ -1,8 +1,10 @@
 import { useState } from "react";
 import axios from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; // Import useAuth from context
 
 function Login() {
+  const { login } = useAuth(); // Get the login function from context
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -15,12 +17,16 @@ function Login() {
     e.preventDefault();
     try {
       const res = await axios.post("/auth/login", form);
-      const token = res.data.token;
+      const { token, user } = res.data; // Assuming user data is in response
 
-      
+      // Set token and user in localStorage
       localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user)); // Store user info in localStorage
 
-      navigate("/");
+      // Use login function from context to set user
+      login(user);
+
+      navigate("/"); // Redirect after successful login
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
     }
