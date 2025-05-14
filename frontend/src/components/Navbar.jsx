@@ -1,38 +1,41 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 
-const Navbar = () => {
-  const { user, logout } = useAuth(); 
-  console.log("USER IN NAVBAR:", user); 
+function Navbar() {
+  const { user, logout } = useAuth();
+
+  useEffect(() => {
+    console.log("USER FROM CONTEXT:", user);
+  }, [user]);
 
   return (
-    <nav className="flex justify-between p-4 bg-gray-800 text-white">
-      <div>
-        <Link to="/" className="mr-4">
-          Home
-        </Link>
-        {user ? (
+    <nav className="flex justify-between bg-gray-800 p-4 text-white">
+      <h1 className="text-xl font-bold">My Blog</h1>
+
+      <div className="flex gap-4">
+        <a href="/">Home</a>
+        {!user && (
           <>
-            <Link to="/profile" className="mr-4">
-              Profile
-            </Link>
-            <button onClick={logout} className="mr-4">
-              Logout
-            </button>
-          </>
-        ) : (
-          <>
-            <Link to="/login" className="mr-4">
-              Login
-            </Link>
-            <Link to="/register" className="mr-4">
-              Register
-            </Link>
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
           </>
         )}
+        {user && (
+          <>
+            <a href="/create">Create Post</a>
+            <button onClick={logout}>Logout</button>
+          </>
+        )}
+        {user && (
+          <>
+            <a href="/profile">Profile</a>
+          </>
+        )}
+        
+
       </div>
     </nav>
   );
-};
+}
 
 export default Navbar;
