@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "../api/axios";
+import { Link } from "react-router-dom";
 
 function Home() {
   const [blogs, setBlogs] = useState([]);
-  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -11,34 +11,33 @@ function Home() {
         const res = await axios.get("/blogs");
         setBlogs(res.data);
       } catch (err) {
-        setError("Failed to fetch blogs");
+        console.error("Error fetching blogs:", err);
       }
     };
-
     fetchBlogs();
   }, []);
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">All Blog Posts</h1>
-      {error && <p className="text-red-500">{error}</p>}
-      {blogs.length === 0 ? (
-        <p>No blog posts yet.</p>
-      ) : (
-        blogs.map((post) => (
-          <div
-            key={post._id}
-            className="mb-6 p-4 border rounded shadow-sm bg-white"
-          >
-            <h2 className="text-xl font-semibold">{post.title}</h2>
-            <p className="text-gray-700">{post.content}</p>
-            <p className="text-sm text-gray-400">
-              by {post.author.username} |{" "}
-              {new Date(post.createdAt).toLocaleString()}
+    <div className="max-w-4xl mx-auto mt-10">
+      <h1 className="text-3xl font-bold mb-6">All Blogs</h1>
+      {blogs.length === 0 && <p>No blogs available.</p>}
+      <div className="space-y-6">        {blogs.map((blog) => (
+          <div key={blog._id} className="p-4 border rounded shadow">
+            <h2 className="text-xl font-semibold">{blog.title}</h2>
+            <p className="text-gray-600 line-clamp-3">
+              {blog.content.length > 150 
+                ? `${blog.content.substring(0, 150)}...` 
+                : blog.content}
             </p>
+            <Link
+              to={`/blogs/${blog._id}`}
+              className="inline-block mt-2 text-blue-600 hover:underline"
+            >
+              Read More
+            </Link>
           </div>
-        ))
-      )}
+        ))}
+      </div>
     </div>
   );
 }

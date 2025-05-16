@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import CreatePost from "./pages/CreateBlog";
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./pages/Profile";
+import EditBlog from "./pages/EditBlog";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/edit/:id" element={<PrivateRoute><EditBlog /></PrivateRoute>} />
         <Route
           path="/create"
           element={
