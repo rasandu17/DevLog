@@ -51,12 +51,20 @@ exports.updateBlog = async (req, res) => {
       return res.status(403).json({ message: 'Not authorized' });
 
     blog.title = req.body.title || blog.title;
-    blog.content = req.body.content || blog.content;
-
-    await blog.save();
+    blog.content = req.body.content || blog.content;    await blog.save();
     res.status(200).json(blog);
   } catch (err) {
     res.status(500).json({ message: 'Error updating blog' });
+  }
+};
+
+// Get blogs for the current user
+exports.getUserBlogs = async (req, res) => {
+  try {
+    const blogs = await Blog.find({ author: req.user.id }).populate('author', 'name email');
+    res.status(200).json(blogs);
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching your blog posts' });
   }
 };
 

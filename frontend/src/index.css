@@ -1,3 +1,61 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --primary-color: #3b82f6;
+  --secondary-color: #1e40af;
+  --accent-color: #f97316;
+  --background-color: #f8fafc;
+  --card-bg: #ffffff;
+  --text-color: #1e293b;
+  --text-light: #64748b;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-300 inline-flex items-center justify-center;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg transition-colors duration-300 inline-flex items-center justify-center;
+  }
+  
+  .btn-danger {
+    @apply bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors duration-300 inline-flex items-center justify-center;
+  }
+  
+  .card {
+    @apply bg-white border border-gray-200 rounded-xl shadow-sm transition-all duration-300 hover:shadow-md overflow-hidden;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors duration-300;
+  }
+  
+  .pagination-button {
+    @apply px-3 py-1 rounded-md focus:outline-none transition-colors duration-200;
+  }
+  
+  .pagination-button-active {
+    @apply bg-blue-600 text-white;
+  }
+  
+  .pagination-button-inactive {
+    @apply text-gray-600 hover:bg-gray-100;
+  }
+  
+  .image-container {
+    @apply relative overflow-hidden rounded-lg;
+  }
+  
+  .image-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300;
+  }
+}
